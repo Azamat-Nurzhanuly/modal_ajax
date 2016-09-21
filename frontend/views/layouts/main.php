@@ -9,6 +9,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -40,7 +42,7 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = '<li>'.Html::button('Signup', ['value' => Url::to('index.php?r=site/signup'), 'id' => 'modal-button', 'class' => 'btn btn-link']).'</li>';
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
@@ -75,6 +77,18 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
+
+<?php
+
+    Modal::begin([
+        'header' => '<h4>Signup</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+    ]);
+
+    echo '<div id = "modalContent"></div>';
+    Modal::end();
+?>
 
 <?php $this->endBody() ?>
 </body>
